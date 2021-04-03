@@ -6,6 +6,15 @@ const getStudents = () => {
     return parsedData.students;
 }
 
+const getStudent = (id) => {
+    let students = getStudents();
+    const student = students.find(s => s.id === id);
+    if (!student) {
+        throw new Error(`Student with ID: ${id} can't be found in the DB.`)
+    }
+    return student;
+}
+
 const addStudent = (student) => {
     let students = getStudents();
     const exists = students.find(s => s.id === student.id)
@@ -42,6 +51,7 @@ const saveStudents = (students) => {
 
 module.exports = {
     getStudents,
+    getStudent,
     addStudent,
     editStudent,
     deleteStudent
