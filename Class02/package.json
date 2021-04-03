@@ -1,0 +1,15 @@
+{
+  "name": "node-class-2",
+  "version": "0.0.1",
+  "description": "This is introduction to Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon ./index.js localhost 8080"
+  },
+  "author": "Ivo Kostovski",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
