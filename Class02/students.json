@@ -1,1 +1,6 @@
-{"students":[{"name":"Peter","age":20,"city":"Skopje","academy":"Code"}]}
+{
+  "students": [
+    { "id": 2, "name": "Josh", "age": 30, "city": "Skopje", "academy": "Code" },
+    { "id": 1, "name": "Peter", "age": 20, "city": "Skopje", "academy": "Code" }
+  ]
+}
