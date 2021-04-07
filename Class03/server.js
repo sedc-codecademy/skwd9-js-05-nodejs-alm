@@ -7,11 +7,6 @@ const server = http.createServer((req, res) => {
     // e.g. URL bank/user01/balance
     // e.g. METHOD GET
     const method = req.method; // GET/POST/PUT/DELETE
-    console.log(url, method);
-
-    console.log('req-header', req.headers);
-    console.log('res-header', res.headers);
-
     // CORS
     /* 
     By default, you're not allowed to make requests from different origins.
@@ -21,9 +16,19 @@ const server = http.createServer((req, res) => {
     respond to that origin.
     */
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, OPTIONS');
+    res.setHeader('Access-Control-Max-Age', 2592000);
 
-    if (url === '/reviews') {
+    console.log(url);
+    console.log(method);
+
+    if (method === 'OPTIONS') {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
+        res.end();
+    }
+
+    if (url.startsWith('/reviews')) {
         if (method === 'GET') {
             // 1. Get the data from the DB
             const text = textService.readDataFromDb('db.json');
@@ -71,9 +76,32 @@ const server = http.createServer((req, res) => {
 
                 textService.writeDataToDb('db.json', dbDataStringified);
             })
+            res.setHeader('Content-Type', 'text/html');
+            res.write('{"message": "Success!"}');
+            res.end();
+        }
+
+        if (method === 'DELETE') {
+
+            // Getting the ID
+            const parsedURL = url.split('/');
+            const id = parsedURL[parsedURL.length - 1];
+
+            // Always need to take the current state of the database
+            const dbData = textService.readDataFromDb('db.json');
+            const dbDataObject = JSON.parse(dbData);
+           
+            let filteredDbDataArray = {
+                reviews: []
+            };
+            // By filtering the reviews, I can omit the review that I need to delete
+            filteredDbDataArray.reviews = dbDataObject.reviews.filter((rev) => rev.id !== id);
+
+            const stringified = JSON.stringify(filteredDbDataArray);
+            textService.writeDataToDb('db.json', stringified);
 
             res.setHeader('Content-Type', 'text/html');
-            res.write('123123');
+            res.write('{"message": "Success!"}');
             res.end();
         }
     }

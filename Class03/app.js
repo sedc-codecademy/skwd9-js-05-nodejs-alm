@@ -27,6 +27,26 @@ postReviewsBtn.addEventListener('click', () => {
     onAddNewReview(newReview);
 })
 
+reviewsListSection.addEventListener('click', (e) => {
+    const id = e.target.id;
+    const reviewId = id.substr(4, id.length);
+
+    if (id.startsWith('del')) {
+        onDeleteReview(reviewId);
+    }
+
+});
+
+const onDeleteReview = (reviewId) => {
+    fetch(`${API_URL}/reviews/${reviewId}`, {
+        method: 'DELETE'
+    })
+    .then((response) => response.json())
+    .then((result) => {
+        console.log(result);
+    })
+}
+
 const onAddNewReview = (newReview) => {
     fetch(`${API_URL}/reviews`, {
         method: 'POST',
@@ -65,7 +85,7 @@ const renderReviews = (reviews) => {
               ${review.title}
             </span>
             <span class="film-card__header-score"> ${review.score} </span>
-            <button class="btn-delete" id="${review.id}">Delete</button>
+            <button class="btn-delete" id="del-${review.id}">Delete</button>
           </div>
           <div class="film-card__content">
             ${review.text}
