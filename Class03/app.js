@@ -1,5 +1,9 @@
 const API_URL = 'http://localhost:3000';
 
+let editFlag = false;
+let currentEditReviewId = '';
+let cachedReviews = [];
+
 const getReviewsBtn = document.querySelector("#get-reviews");
 const postReviewsBtn = document.querySelector("#post-review");
 
@@ -13,18 +17,17 @@ getReviewsBtn.addEventListener('click', () => {
     getReviews();
 });
 
-postReviewsBtn.addEventListener('click', () => {
-    const title = titleInput.value;
-    const score = scoreInput.value;
-    const text = textInput.value;
-
-    const newReview = {
-        title,
-        score,
-        text
-    };
-
-    onAddNewReview(newReview);
+postReviewsBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let review;
+    
+    if (editFlag) {
+        review = getFormInput();
+        putExistingReview(currentEditReviewId, review);
+    } else {
+        review = getFormInput();
+        onAddNewReview(review);
+    }
 })
 
 reviewsListSection.addEventListener('click', (e) => {
@@ -35,7 +38,49 @@ reviewsListSection.addEventListener('click', (e) => {
         onDeleteReview(reviewId);
     }
 
+    if (id.startsWith('edt')) {
+        // Raise EDIT flag
+        // Now we're in EDIT mode
+        editFlag = true;
+        currentEditReviewId = reviewId;
+        // Get the review we want to edit
+        const editReview = cachedReviews.filter((review) => review.id === reviewId)[0];
+        
+        titleInput.value = editReview.title;
+        scoreInput.value = editReview.score;
+        textInput.value = editReview.text;
+    }
 });
+
+const getFormInput = () => {
+    const title = titleInput.value;
+    const score = scoreInput.value;
+    const text = textInput.value;
+
+    const newReview = {
+        title,
+        score,
+        text
+    };
+
+    return newReview;
+}
+
+const putExistingReview = (currentRevId, rev) => {
+    fetch(`${API_URL}/reviews/${currentRevId}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "text/plain",
+        },
+        body: JSON.stringify(rev)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        editFlag = false;
+        currentEditReviewId = '';
+    })
+}
 
 const onDeleteReview = (reviewId) => {
     fetch(`${API_URL}/reviews/${reviewId}`, {
@@ -69,7 +114,8 @@ const getReviews = () => {
         .then((response) => response.json())
         .then((result) => {
             // Since the db, holds an object that has a reviews property
-            renderReviews(result.reviews);
+            cachedReviews = result.reviews;
+            renderReviews(cachedReviews);
     })
 }
 
@@ -86,6 +132,7 @@ const renderReviews = (reviews) => {
             </span>
             <span class="film-card__header-score"> ${review.score} </span>
             <button class="btn-delete" id="del-${review.id}">Delete</button>
+            <button class="btn-edit" id="edt-${review.id}">Edit</button>
           </div>
           <div class="film-card__content">
             ${review.text}

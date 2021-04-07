@@ -104,6 +104,41 @@ const server = http.createServer((req, res) => {
             res.write('{"message": "Success!"}');
             res.end();
         }
+
+        if (method === 'PUT') {
+
+            const parsedURL = url.split('/');
+            const id = parsedURL[parsedURL.length - 1];
+
+            const body = [];
+            req.on('data', (chunk) => {
+                body.push(chunk);
+            });
+
+            req.on('end', () => {
+                // Parse the body here
+                const parsedBody = Buffer.concat(body).toString();
+                const review = JSON.parse(parsedBody);
+
+                const dbData = textService.readDataFromDb('db.json');
+                const dbDataObject = JSON.parse(dbData);
+
+                dbDataObject.reviews.forEach((element) => {
+                    if (element.id === id) {
+                        element.title = review.title;
+                        element.score = review.score;
+                        element.text = review.text;
+                    }
+                })
+
+                const stringified = JSON.stringify(dbDataObject);
+                textService.writeDataToDb('db.json', stringified);
+
+                res.setHeader('Content-Type', 'text/html');
+                res.write('{"message": "Success!"}');
+                res.end();
+            })
+        }
     }
 
     // e.g How to make a simple response
