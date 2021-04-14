@@ -18,4 +18,10 @@ app.get('/animals', (req, res, next) => {
     res.send(animals)
 })
 
+app.post('/animals', (req, res, next) => {
+    console.log(req.body)
+
+    res.send('ok')
+})
+
 app.listen(3000)
