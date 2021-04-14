@@ -9,6 +9,20 @@ const getData = (file) => {
     })
 }
 
+const addData = (data, file) => {
+    let items = JSON.parse(getData(file));
+
+    items = [...items, data];
+
+    return fs.writeFileSync(
+        path.join(__dirname, 'db', file),
+        JSON.stringify(items),
+        err => {
+            if (err) throw err
+        })
+}
+
 module.exports = {
-    getData
+    getData,
+    addData
 }

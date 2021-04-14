@@ -1,6 +1,7 @@
 const express = require('express');
 const fileSystem = require('./file-system');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
@@ -19,9 +20,15 @@ app.get('/animals', (req, res, next) => {
 })
 
 app.post('/animals', (req, res, next) => {
-    console.log(req.body)
+    const animal = {
+        imgSrc: req.body.imgSrc,
+        animalName: req.body.animalName,
+        description: req.body.description,
+        id: uuidv4() 
+    }
 
-    res.send('ok')
+    fileSystem.addData(animal, 'animals.json')
+    res.send(animal)
 })
 
 app.listen(3000)
