@@ -13,10 +13,9 @@ const carouselImage = (imgSrc, label, description, active) => {
 fetch('http://localhost:3000')
 .then(res => res.json())
 .then(slides => {
-    console.log(slides)
     carouselContainer.innerHTML = '';
     slides.forEach((slide, index) => {
-        const {imgSrc, label, description} = slide;
+        const { imgSrc, label, description } = slide;
         const active = index === 0;
         carouselContainer.innerHTML += carouselImage(imgSrc, label, description, active);
     })
