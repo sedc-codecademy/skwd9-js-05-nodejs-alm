@@ -1,8 +1,8 @@
 const formValues = () => {
     return {
-        name: document.querySelector('#name').value,
+        animalName: document.querySelector('#name').value,
         description: document.querySelector('#description').value,
-        imgSrc: document.querySelector('#imgSrc').value
+        imgSrc: document.querySelector('#imgSrc').value,
     }
 }
 

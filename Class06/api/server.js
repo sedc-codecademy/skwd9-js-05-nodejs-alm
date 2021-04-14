@@ -31,4 +31,10 @@ app.post('/animals', (req, res, next) => {
     res.send(animal)
 })
 
+app.delete('/animals/:id', (req, res, next) => {
+    const id = req.params.id;
+    fileSystem.deleteData(id, 'animals.json')
+    res.send(JSON.stringify({ deleted: true }))
+})
+
 app.listen(3000)

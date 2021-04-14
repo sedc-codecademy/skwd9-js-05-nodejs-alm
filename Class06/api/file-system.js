@@ -22,7 +22,21 @@ const addData = (data, file) => {
         })
 }
 
+const deleteData = (id, file) => {
+    let items = JSON.parse(getData(file));
+    items = items.filter(item => item.id !== id);
+
+    return fs.writeFileSync(
+        path.join(__dirname, 'db', file),
+        JSON.stringify(items),
+        err => {
+            if (err) throw err
+        }
+    )
+}
+
 module.exports = {
     getData,
-    addData
+    addData,
+    deleteData
 }

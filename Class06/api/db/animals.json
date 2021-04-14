@@ -4,10 +4,5 @@
     "animalName": "Lion",
     "description": "This is a lion",
     "imgSrc": "https://images.pexels.com/photos/247502/pexels-photo-247502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-  },
-  {
-    "imgSrc": "https://images.pexels.com/photos/45170/kittens-cat-cat-puppy-rush-45170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "description": "These are cats.",
-    "id": "b98ce361-d139-4ae0-a372-3cc4419288ee"
   }
 ]
