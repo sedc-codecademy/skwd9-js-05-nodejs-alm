@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const getData = () => {
-    return fs.readFileSync(path.join(__dirname, 'db', 'carousel-images.json'), err => {
-        if (err) throw err
+const getData = (file) => {
+    return fs.readFileSync(
+        path.join(__dirname, 'db', file), 
+        err => {
+            if (err) throw err
     })
 }
 

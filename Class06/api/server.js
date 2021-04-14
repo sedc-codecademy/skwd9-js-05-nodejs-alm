@@ -8,10 +8,14 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 
-app.use('/', (req, res, next) => {
-    const carouselImages = fileSystem.getData();
+app.get('/', (req, res, next) => {
+    const carouselImages = fileSystem.getData('carousel-images.json');
     res.send(carouselImages)
 })
 
+app.get('/animals', (req, res, next) => {
+    const animals = fileSystem.getData('animals.json')   
+    res.send(animals)
+})
 
 app.listen(3000)
