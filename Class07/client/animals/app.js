@@ -12,12 +12,14 @@ const animalCard = (id, imgSrc, animalName, description) => {
                 <h5 class="card-title">${animalName}</h5>
                 <p class="card-text">${description}</p>
                 <a href="#" class="btn btn-danger" id="delete__${id}">Delete</a>
-                <a href="../add-animal/index.html?id=${id}" class="btn btn-warning" id="edit__${id}">Edit</a>
+                <a href="#" class="btn btn-warning" id="edit__${id}">Edit</a>
                 </div>
             </div>
         </div>
     `;
 };
+
+//href="../add-animal/index.html?id=${id}"
 
 fetch("http://localhost:3000/animals")
   .then(res => res.json())
@@ -45,7 +47,7 @@ fetch("http://localhost:3000/animals")
 
     editButtons.forEach(button => {
       button.addEventListener('click', e => {
-        editAnimal();
+        editAnimal(e.target.id.split('__')[1]);
       })
     })
     
@@ -60,6 +62,8 @@ const deleteAnimal = id => {
     .catch(err => console.error(err))
 };
 
+// Programmatically navigating to a route
 const editAnimal = id => {
-
+  // http://animalshelter/animals
+  window.location.href = `file:///Users/ivokostovski/Desktop/skwd9-js-05-nodejs-alm/Class07/client/add-animal/index.html?id=${id}`
 }
