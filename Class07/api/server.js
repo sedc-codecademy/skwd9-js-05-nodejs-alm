@@ -11,7 +11,16 @@ app.use(express.json());
 
 // Get all animals
 app.get("/animals", (req, res, next) => {
-  const animals = fileSystem.getData("animals.json");
+  let animals = JSON.parse(fileSystem.getData("animals.json"));
+
+  if (req.query.pageSize) {
+    animals = animals.slice(0, parseInt(req.query.pageSize))
+  }
+
+  if (req.query.sortBy) {
+    animals.sort((a, b) => a[req.query.sortBy].localeCompare(b[req.query.sortBy]))
+  }
+
   res.send(animals);
 });
 

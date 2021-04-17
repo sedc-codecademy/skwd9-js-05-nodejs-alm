@@ -21,7 +21,8 @@ const animalCard = (id, imgSrc, animalName, description) => {
 
 //href="../add-animal/index.html?id=${id}"
 
-fetch("http://localhost:3000/animals")
+const getAnimals = (queryParams = '') => {
+  fetch(`http://localhost:3000/animals?${queryParams}`)
   .then(res => res.json())
   .then(animals => {
     animalsContainer.innerHTML = "";
@@ -50,8 +51,22 @@ fetch("http://localhost:3000/animals")
         editAnimal(e.target.id.split('__')[1]);
       })
     })
-    
   });
+}
+
+getAnimals('pageSize=10');
+
+document.querySelector('#get-all').addEventListener('click', () => {
+  getAnimals();
+})
+
+document.querySelector('#sort-by-name').addEventListener('click', () => {
+  getAnimals('sortBy=animalName')
+})
+
+document.querySelector('#sort-by-description').addEventListener('click', () => {
+  getAnimals('sortBy=description')
+})
 
 const deleteAnimal = id => {
   fetch(`http://localhost:3000/animals/${id}`, {
