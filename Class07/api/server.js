@@ -9,11 +9,6 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 
-app.get('/', (req, res, next) => {
-    const carouselImages = fileSystem.getData('carousel-images.json');
-    res.send(carouselImages)
-})
-
 app.get('/animals', (req, res, next) => {
     const animals = fileSystem.getData('animals.json')   
     res.send(animals)
@@ -35,6 +30,11 @@ app.delete('/animals/:id', (req, res, next) => {
     const id = req.params.id;
     fileSystem.deleteData(id, 'animals.json')
     res.send(JSON.stringify({ deleted: true }))
+})
+
+app.get('/', (req, res, next) => {
+    const carouselImages = fileSystem.getData('carousel-images.json');
+    res.send(carouselImages)
 })
 
 app.listen(3000)

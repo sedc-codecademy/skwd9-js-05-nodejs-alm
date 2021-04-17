@@ -18,6 +18,19 @@ document.querySelector("#submit").addEventListener("click", () => {
     })
     .then(res => res.json())
     .then(animal => {
-        console.log(animal)
+        window.location.href = 'file:///Users/ivokostovski/Desktop/skwd9-js-05-nodejs-alm/Class07/client/animals/index.html'
     })
 });
+
+
+(() => {
+    let queryParams = window.location.search;
+
+    if (queryParams) {
+        id = queryParams.split('=')[1];
+
+        fetch(`http://localhost:3000/animals/${id}`)
+            .then(res => res.json())
+            .then(animal => console.log(animal))
+    }
+})()

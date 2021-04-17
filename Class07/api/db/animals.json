@@ -1,8 +1,1 @@
-[
-  {
-    "id": "1",
-    "animalName": "Lion",
-    "description": "This is a lion",
-    "imgSrc": "https://images.pexels.com/photos/247502/pexels-photo-247502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-  }
-]
+[{"imgSrc":"https://images.pexels.com/photos/65289/polar-bear-bear-teddy-sleep-65289.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260","animalName":"Polar bear","description":"jdhjkdahj","id":"c443e48e-8829-4e88-af3e-33730f7092e0"},{"imgSrc":"https://images.pexels.com/photos/567540/pexels-photo-567540.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260","animalName":"Chameleon","description":"kjdsahdka","id":"bb820cc5-98dd-466c-b496-78245847f491"}]
