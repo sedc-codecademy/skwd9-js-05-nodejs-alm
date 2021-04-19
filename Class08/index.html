@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shop</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__brand">microShop</div>
+    </header>
+    <main class="main">
+      <aside class="sidebar">
+        <nav class="sidebar__nav">
+          <ul class="sidebar__nav-list" id="navigation-list">
+            <li id="link-purchase" class="sidebar__nav-list-item">Purchase</li>
+            <li id="link-inventory" class="sidebar__nav-list-item">
+              Inventory
+            </li>
+            <li id="link-customers" class="sidebar__nav-list-item">
+              Customers
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <div class="content">
+        <section class="purchase">
+          <div class="purchase__new">
+            <h2 class="title">New Purchase</h2>
+            <form class="form">
+              <select id="purchase-product" class="form__input">
+                <option selected disabled value="none">
+                  Choose a product...
+                </option>
+                <option value="dog" class="option">Dog</option>
+                <option value="food" class="option">Food</option>
+              </select>
+              <input
+                type="text"
+                class="form__input"
+                id="purchase-amount"
+                placeholder="Amount"
+              />
+              <input
+                type="text"
+                class="form__input"
+                placeholder="Price"
+                id="purchase-price"
+                disabled
+              />
+              <button id="add-to-cart" type="button" class="btn btn-cart">
+                Add to Cart
+              </button>
+              <button id="submit-purchase" class="btn btn-submit" type="button">
+                Submit
+              </button>
+            </form>
+            <div class="cart">
+              <h2 class="title">Cart</h2>
+              <ul class="cart__list">
+                <li class="cart__list-item">
+                  <span class="item-amount">1</span>
+                  Water
+                </li>
+                <li class="cart__list-item">
+                  <span class="item-amount">2</span>
+                  Tomatoes
+                </li>
+                <li class="cart__list-item">
+                  <span class="item-amount">3</span>
+                  Eggs
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="purchase__list">
+            <h2>List of Purchases</h2>
+            <ul class="purchases__list">
+              <li class="purchases__list-item">
+                <div class="purchases__list-item-card">
+                  <div class="purchases__list-item-card-product">
+                    Product 01
+                  </div>
+                  <div class="purchases__list-item-card-amount">
+                    Total: $9.99
+                  </div>
+                </div>
+              </li>
+              <li class="purchases__list-item"></li>
+              <li class="purchases__list-item"></li>
+            </ul>
+          </div>
+        </section>
+        <section class="inventory hide">
+          <div class="inventory__new">
+            <h2 class="title">New Item</h2>
+            <form class="form">
+              <input
+                type="text"
+                class="form__input"
+                placeholder="Name"
+                id="inventory-name"
+              />
+              <input
+                type="text"
+                class="form__input"
+                placeholder="Individual Price"
+                id="inventory-price"
+              />
+              <button
+                type="button"
+                id="inventory-submit-btn"
+                class="btn btn-submit"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="inventory__list">
+            <h2 class="title">Inventory List</h2>
+            <ul class="list__inventory" id="inventory-list">
+              <li class="list__inventory-item">
+                <div class="list__inventory-item-card">
+                  <div class="list__inventory-item-card-content">
+                    <div class="list__inventory-item-card-title">Item 01</div>
+                    <div class="list__inventory-item-card-price">$4.99</div>
+                  </div>
+                  <div class="list__inventory-item-actions">
+                    <div class="list__inventory-item-card-edit">Edit</div>
+                    <div class="list__inventory-item-card-delete">Delete</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section class="customers hide">
+          <h2 class="title">Customers</h2>
+        </section>
+      </div>
+    </main>
+    <script src="nav.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
