@@ -26,6 +26,45 @@ class InventoryModel {
       }
     });
   }
+
+  insertNewInventoryItem (item) {
+    return new Promise((resolve, reject) => {
+      item.id = uuidv4();
+
+      // Get the data from the DB as it is
+      const dbDataText = textService.readDataFromDb('inventory.json');
+      // Convert the data from text to an object
+      const dbData = JSON.parse(dbDataText);
+      // Push the new item to the data array
+      dbData.inventory.push(item);
+      // Stringify the data object
+      const dbDataStringified = JSON.stringify(dbData);
+      // Write the newly created string to the database
+      textService.writeDataToDb('inventory.json', dbDataStringified);
+
+      resolve({
+        message: 'Item successfully added!'
+      })
+    })
+  }
+
+  deleteInventoryItem (itemId) {
+    return new Promise((resolve, reject) => {
+      const dbDataText = textService.readDataFromDb('inventory.json');
+      const dbData = JSON.parse(dbDataText);
+
+      const filtered = dbData.inventory.filter((item) => item.id !== itemId);
+      dbData.inventory = filtered;
+
+      const dbDataStringified = JSON.stringify(dbData);
+      textService.writeDataToDb('inventory.json', dbDataStringified);
+
+      resolve({
+        message: 'Item successfully added!'
+      })
+    })
+  }
+
 }
 
 module.exports = InventoryModel;
