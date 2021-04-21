@@ -7,6 +7,17 @@ const submitInventoryItemBtn = document.querySelector("#inventory-submit-btn");
 const inventoryTitleInput = document.querySelector("#inventory-name");
 const inventoryPriceInput = document.querySelector("#inventory-price");
 
+const editState = {
+  editMode: false,
+  editId: ''
+}
+
+const getSingleInventoryItem = async (id) => {
+  const response = await fetch(`${API_URL}/inventory/${id}`);
+  const result = await response.json();
+  return result;
+};
+
 const getInventoryItems = () => {
   fetch(`${API_URL}/inventory`)
     .then((response) => response.json())
@@ -47,7 +58,10 @@ const postNewInventoryItem = (item) => {
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
-    });
+    })
+    .finally(() =>{
+      getInventoryItems();
+    })
 };
 
 const deleteInventoryItem = (itemId) => {
@@ -57,25 +71,55 @@ const deleteInventoryItem = (itemId) => {
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
-    });
+    })
+    .finally(() => {
+      getInventoryItems();
+    })
 };
+
+const updateInventoryItem = (id, item) => {
+  fetch(`${API_URL}/inventory/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(item)
+  })
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result);
+    editState.editId = '';
+    editState.editMode = false;
+  })
+  .finally(() => {
+    getInventoryItems();
+  })
+}
 
 inventoryNavigationBtn.addEventListener("click", () => {
   getInventoryItems();
 });
 
-submitInventoryItemBtn.addEventListener("click", () => {
+submitInventoryItemBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   const title = inventoryTitleInput.value;
   const price = parseFloat(inventoryPriceInput.value);
-
+  
   const item = {
     title,
     price,
   };
-  postNewInventoryItem(item);
+
+  if (editState.editMode) {
+    updateInventoryItem(editState.editId, item);
+  }
+
+  if (!editState.editMode) {
+    postNewInventoryItem(item);
+  }
 });
 
-inventoryList.addEventListener("click", (e) => {
+inventoryList.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const targetId = e.target.id;
@@ -83,5 +127,16 @@ inventoryList.addEventListener("click", (e) => {
 
   if (targetId.startsWith("idel")) {
     deleteInventoryItem(id);
+  }
+
+  if (targetId.startsWith("iedt")) {
+    editState.editId = id;
+    editState.editMode = true;
+
+    const itemToEdit = await getSingleInventoryItem(id);
+
+    inventoryTitleInput.value = itemToEdit.title;
+    inventoryPriceInput.value = itemToEdit.price;
+
   }
 });

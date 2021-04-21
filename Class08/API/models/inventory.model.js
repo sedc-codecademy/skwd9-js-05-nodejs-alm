@@ -65,6 +65,28 @@ class InventoryModel {
     })
   }
 
+  putInventoryItem (id, body) {
+    return new Promise((resolve, reject) => {
+      const dbDataText = textService.readDataFromDb('inventory.json');
+      const dbData = JSON.parse(dbDataText);
+
+      dbData.inventory.forEach((item) => {
+        if (item.id === id) {
+          item.title = body.title;
+          item.price = body.price;
+        }
+      });
+
+      const stringified = JSON.stringify(dbData);
+      textService.writeDataToDb('inventory.json', stringified);
+
+      resolve({
+        message: "Item successfully updated!"
+      })
+      
+    })
+  }
+
 }
 
 module.exports = InventoryModel;

@@ -21,6 +21,10 @@ class InventoryController {
         return inventoryModel.deleteInventoryItem(itemId);
     }
 
+    updateInventoryItem(id, body) {
+        return inventoryModel.putInventoryItem(id, body);
+    }
+
 }
 
 module.exports = InventoryController;

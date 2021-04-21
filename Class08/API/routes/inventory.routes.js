@@ -51,4 +51,15 @@ router.delete('/:id?', (req, res) => {
   }
 })
 
+router.put("/:id?", (req, res) => {
+  const id = req.params.id;
+  const body = req.body;
+
+  if (id && body) {
+    inventoryController.updateInventoryItem(id, body).then((response) => {
+      res.status(200).json(response);
+    });
+  }
+});
+
 module.exports = router;
