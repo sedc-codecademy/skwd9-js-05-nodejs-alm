@@ -1,0 +1,17 @@
+const router = require('express').Router();
+const ts = require('../textService');
+
+router.post('/add-user', (req, res) => {
+    const user = req.body;
+    const text = ts.readDataFromDb('db.json');
+    const dbData = JSON.parse(text);
+
+    const newDbData = [...dbData, user];
+
+    const stringified = JSON.stringify(newDbData);
+    ts.writeDataToDb('db.json', stringified);
+
+    res.redirect('/api/users');
+});
+
+module.exports = router;

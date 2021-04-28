@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const UserController = require('../controllers/user.controller');
 const cookieValidator = require('../cookieValidator.const');
+const sessionValidator = require('../sessionValidator.const');
 const uc = new UserController();
 
-router.get("/:id?", cookieValidator, (req, res) => {
+router.get("/:id?", sessionValidator, (req, res) => {
   if (req.params && req.params.id) {
     // do stuff
   } else {
