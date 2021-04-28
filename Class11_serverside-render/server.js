@@ -9,6 +9,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/api', router);
 

@@ -1,6 +1,1 @@
-[
-    { "username": "ivan.lazarevski", "email": "ivan@seavus.com" },
-    { "username": "george.dimitrov", "email": "george@seavus.com" },
-    { "username": "ivo.kostovski", "email": "ivo@seavus.com" }
-  ]
-  
+[{"username":"ivan.lazarevski","email":"ivan@seavus.com"},{"username":"george.dimitrov","email":"george@seavus.com"},{"username":"ivo.kostovski","email":"ivo@seavus.com"},{"username":"john.doe","email":"john@seavus.com"}]
