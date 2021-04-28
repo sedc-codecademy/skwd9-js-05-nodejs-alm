@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item"><a href="/api/users">Users</a></li>
+                <li class="main-header__item"><a href="/api/admin/add-user">Add User</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Users</h1>
+        <p>List of users...</p>
+        <% if (hasUsers) { %>
+        <ul class="user-list">
+            <% users.forEach(function(user) { %>
+                <li class="list-item">
+                    <div class="user-card">
+                        <div class="user-card__name">
+                            <%= user.username %>
+                        </div>
+                        <div class="user-card__email">
+                            <%= user.email %>
+                        </div>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+        <% } else { %>
+            <h1>No users found!</h1>
+            <% } %>
+    </main>
+</body>
+</html>
+
+
+
+

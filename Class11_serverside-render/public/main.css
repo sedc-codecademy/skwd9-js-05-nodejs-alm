@@ -42,3 +42,26 @@ main {
 input, button {
     padding: 1rem;
 }
+
+.user-list {
+    list-style: none;
+}
+
+.user-card {
+    background-color: #2d3436;
+    color: #f5f5f5;
+    width: 44rem;
+    padding: 1rem;
+    font-size: 1.8rem;
+    border-radius: 4px;
+}
+
+.user-card__name {
+    color: #27ae60;
+    border-bottom: 1px solid #27ae60;
+    margin: 4px;
+}
+
+.list-item {
+    margin-top: 4px;
+}
