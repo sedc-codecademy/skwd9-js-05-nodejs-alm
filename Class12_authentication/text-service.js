@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-const writeUsers = users => {
+const writeUser = user => {
+    const users = readUsers();
+    users.push(user);
     fs.writeFileSync('./db.json', JSON.stringify(users), err => {
         if (err) throw err;
     });
@@ -11,6 +13,6 @@ const readUsers = () => JSON.parse(fs.readFileSync('./db.json', { encoding: 'utf
 }))
 
 module.exports = {
-    writeUsers,
+    writeUser,
     readUsers
 }
