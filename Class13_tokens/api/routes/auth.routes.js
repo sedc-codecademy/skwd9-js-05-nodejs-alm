@@ -58,6 +58,15 @@ router.post("/register", async (req, res) => {
 // Login endpoint
 router.post("/login", async (req, res) => {
   // Validation of the login data
+  const schema = Joi.object({
+    email: Joi.string() .min(6),
+    password: Joi.string() .min(8)
+  })
+  const validation = schema.validate(req.body);
+
+  if (validation?.error) {
+    return res.status(400).send({message: `Incorrect credentials!`})
+  }
 
   // Check if that user exists
   const users = textService.readUsers();
@@ -75,9 +84,9 @@ router.post("/login", async (req, res) => {
     });
   }
   // Log in the user
-  const token = jwt.sign({ id: user.id, creationDate: new Date() }, "this-is-a-secret");
+  const token = 'Bearer ' + jwt.sign({ id: user.id, creationDate: new Date() }, process.env.ACCESS_TOKEN_SECRET);
 
-  res.header("auth-token", token).send(token);
+  res.header("Authorization", token).send(token);
 });
 
 module.exports = router;
