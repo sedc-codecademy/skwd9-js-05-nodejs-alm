@@ -1,1 +1,20 @@
-[{"id":"befeec44-fc0d-462c-b1ee-abff89058c47","email":"ivo@gmail.com","password":"$2b$10$oTjmiA9L45dS336vgO93MeC9nOolnp9jH9Ln.CRqAFgQeiSfjcEDu","fullName":"Ivo Kostovski","age":31,"gender":"M"}]
+[
+  {
+    "id": "c78c42e2-a82d-4e75-9b90-9387f7c7cfcd",
+    "email": "ivo@gmail.com",
+    "password": "$2b$10$FxLDZEOau5C6oYxd3BVFH.qwxThNp20jspoBGw5PXjmKYWQ5RwF3m",
+    "fullName": "Ivo Kostovski",
+    "age": 31,
+    "gender": "M",
+    "role": "User"
+  },
+  {
+    "id": "5b7b39d5-59a7-4f0d-b4d4-789018c0a2b4",
+    "email": "ivan@gmail.com",
+    "password": "$2b$10$t4PL3ovAkLUdKm04F0VTqO8XVafxT7IOaTdVaOCKcf.jR.EjkhV6i",
+    "fullName": "Ivan Lazarevski",
+    "age": 29,
+    "gender": "M",
+    "role": "Admin"
+  }
+]

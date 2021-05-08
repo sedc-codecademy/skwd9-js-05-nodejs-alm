@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Role = require('../helpers/role');
 
 // Register endpoint
 router.post("/register", async (req, res) => {
@@ -44,7 +45,8 @@ router.post("/register", async (req, res) => {
     hashedPassword,
     req.body.fullName,
     req.body.age,
-    req.body.gender
+    req.body.gender,
+    Role.User
   );
 
   // Save the user to the DB
@@ -83,8 +85,12 @@ router.post("/login", async (req, res) => {
       message: `Incorrect credentials!`,
     });
   }
-  // Log in the user
-  const token = 'Bearer ' + jwt.sign({ id: user.id, creationDate: new Date() }, process.env.ACCESS_TOKEN_SECRET);
+  // Log in the user - Create the token
+  const token = 'Bearer ' + jwt.sign({ 
+    id: user.id, 
+    email: user.email,
+    role: user.role
+  }, process.env.ACCESS_TOKEN_SECRET);
 
   res.header("Authorization", token).send(token);
 });
