@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Role = require('../helpers/role');
+const Role = require("../helpers/role");
 
 // Register endpoint
 router.post("/register", async (req, res) => {
@@ -61,13 +61,13 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   // Validation of the login data
   const schema = Joi.object({
-    email: Joi.string() .min(6),
-    password: Joi.string() .min(8)
-  })
+    email: Joi.string().min(6),
+    password: Joi.string().min(8),
+  });
   const validation = schema.validate(req.body);
 
   if (validation?.error) {
-    return res.status(400).send({message: `Incorrect credentials!`})
+    return res.status(400).send({ message: `Incorrect credentials!` });
   }
 
   // Check if that user exists
@@ -86,13 +86,74 @@ router.post("/login", async (req, res) => {
     });
   }
   // Log in the user - Create the token
-  const token = 'Bearer ' + jwt.sign({ 
-    id: user.id, 
-    email: user.email,
-    role: user.role
-  }, process.env.ACCESS_TOKEN_SECRET);
+  const accessToken =
+    "Bearer " +
+    jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "20s" }
+    );
 
-  res.header("Authorization", token).send(token);
+  const refreshToken = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    },
+    process.env.REFRESH_TOKEN_SECRET
+  );
+
+  textService.addToken(refreshToken);
+
+  res.header("Authorization", accessToken).send({
+    message: "Logged in",
+    accessToken,
+    refreshToken,
+  });
+});
+
+router.post("/token", (req, res) => {
+  const refreshToken = req.body.token;
+
+  if (!refreshToken) {
+    return res.status(401).send({ message: "Token not valid!" });
+  }
+
+  const refreshTokens = textService.getTokens();
+
+  if (!refreshTokens.includes(refreshToken)) {
+    return res
+      .status(403)
+      .send({ message: "You are unauthorized! Please log in." });
+  }
+
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      return res
+        .status(403)
+        .send({ message: "You are unauthorized! Please log in." });
+    }
+
+    const accessToken =
+      "Bearer " +
+      jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "20s" }
+      );
+
+    res
+      .header("Authorization", accessToken)
+      .send({ message: "Refreshed successfully!", accessToken });
+  });
 });
 
 module.exports = router;

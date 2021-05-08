@@ -1,5 +1,6 @@
 {
     "env": {
-        "ACCESS_TOKEN_SECRET": "very-secret-code"
+        "ACCESS_TOKEN_SECRET": "very-secret-code",
+        "REFRESH_TOKEN_SECRET": "another-very-secret-key"
     }
 }
