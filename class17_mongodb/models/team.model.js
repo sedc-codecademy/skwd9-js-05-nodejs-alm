@@ -18,6 +18,6 @@ const teamSchema = new Schema({
         type: Number,
         required: false
     },
-})
+}, { timestamps: true })
 
 module.exports = Team = mongoose.model('Team', teamSchema);
