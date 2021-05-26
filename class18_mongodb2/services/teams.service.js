@@ -4,7 +4,19 @@ const { GeneralError, NotFound, BadRequest } = require('../const/error.const')
 module.exports = class TeamsService {
     static async getAllTeams() {
         try {
-            const teams = await Team.find();
+            const teams = await Team.aggregate(
+                [
+                    {
+                        $lookup: {
+                            from: 'players',
+                            localField: 'playersIds',
+                            foreignField: '_id',
+                            as: 'players'
+                        },
+                        
+                    }
+                ]
+            );
             if (!teams) {
                 return [];
             }
