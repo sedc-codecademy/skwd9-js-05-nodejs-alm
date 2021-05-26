@@ -1,4 +1,5 @@
 const Team = require('../models/team.model')
+const { GeneralError, NotFound, BadRequest } = require('../const/error.const')
 
 module.exports = class TeamsService {
     static async getAllTeams() {
@@ -9,7 +10,7 @@ module.exports = class TeamsService {
             }
             return teams;
         } catch (error) {
-            console.log(`Could not get all teams. ERROR: ${error}`)
+            throw new GeneralError(`Could not get all teams. ERROR: ${error}`)
         }
     }
 
@@ -18,7 +19,7 @@ module.exports = class TeamsService {
             const team = await Team.findById({ _id: id });
             return team;
         } catch (error) {
-            console.log(`Failed while trying to get team with ID: ${id}`, error)
+            throw new NotFound(`Team with ID: ${id} was not found.`)
         }
     }
 
@@ -34,7 +35,7 @@ module.exports = class TeamsService {
             const createdTeam = await new Team(team).save()
             return createdTeam;
         } catch (error) {
-            console.log(`Error while creating a team. ERROR: ${error}`)
+            throw new BadRequest(`Error occurred while saving the team.`)
         }
     }
 
@@ -43,7 +44,7 @@ module.exports = class TeamsService {
             const updatedTeam = await Team.replaceOne({ _id: id }, data)
             return updatedTeam;
         } catch (error) {
-
+            throw new GeneralError(`Error occurred while updating the team with id: ${id}`)
         }
     }
 
@@ -52,7 +53,22 @@ module.exports = class TeamsService {
             const updatedTeam = await Team.updateOne({ _id: id }, data)
             return updatedTeam;
         } catch (error) {
+            throw new GeneralError(`Error occurred while updating the team with id: ${id}`)
+        }
+    }
 
+    // Hard Delete - actually deleting/removing the document from the db
+
+    // Soft Delete - not really deleting, just marking it as deleted
+    // deletedAt - 2021-05-26T17:01:21.361+00:00
+    // isDeleted = true
+
+    static async deleteTeam(id) {
+        try {
+            const deleted = await Team.deleteOne({ _id: id });
+            return deleted;
+        } catch (error) {
+            throw new GeneralError(`Error occurred while deleting the team with id: ${id}`)
         }
     }
 }
