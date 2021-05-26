@@ -6,5 +6,6 @@ router.post('/', TeamsController.createTeam)
 router.get('/:id', TeamsController.getTeamById)
 router.put('/:id', TeamsController.updateFullTeam)
 router.patch('/:id', TeamsController.updateTeam)
+router.delete('/:id', TeamsController.deleteTeam)
 
 module.exports = router;

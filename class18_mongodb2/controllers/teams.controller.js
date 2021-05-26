@@ -7,7 +7,7 @@ module.exports = class TeamsController {
             const teams = await TeamsService.getAllTeams();
             res.status(200).json(teams)
         } catch (error) {
-            res.status(500).json({ error })
+            next(error)
         }
     }
 
@@ -17,7 +17,7 @@ module.exports = class TeamsController {
             const team = await TeamsService.getTeamById(id)
             res.status(200).json(team);
         } catch (error) {
-            res.status(500).json({ error })
+            next(error)
         }
     }
 
@@ -26,7 +26,7 @@ module.exports = class TeamsController {
             const createdTeam = await TeamsService.createTeam(req.body);
             res.status(201).json(createdTeam);
         } catch (error) {
-            res.status(500).json({ error })
+            next(error)
         }
     }
 
@@ -36,7 +36,7 @@ module.exports = class TeamsController {
             const updatedTeam = await TeamsService.updateFullTeam(req.body, req.params.id)
             res.status(204).json({updatedTeam});
         } catch (error) {
-            res.status(500).json({ error })
+            next(error)
         }
     }
 
@@ -44,10 +44,18 @@ module.exports = class TeamsController {
     static async updateTeam(req, res, next) {
         try {
             const updatedTeam = await TeamsService.updateTeam(req.body, req.params.id)
-            res.status(204).json({updatedTeam});
+            res.status(204).json(updatedTeam);
         } catch (error) {
-            res.status(500).json({ error })
+            next(error)
         }
     }
 
+    static async deleteTeam(req, res, next) {
+        try {
+            const deleted = await TeamsService.deleteTeam(req.params.id)
+            res.status(200).json(deleted)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
