@@ -3,7 +3,6 @@ const TeamsService = require('../services/teams.service');
 module.exports = class TeamsController {
 
     static async getAllTeams(req, res, next) {
-        console.log('Controller', req)
         try {
             const teams = await TeamsService.getAllTeams();
             res.status(200).json(teams)
@@ -30,4 +29,25 @@ module.exports = class TeamsController {
             res.status(500).json({ error })
         }
     }
+
+    // PUT - replace old team with new one
+    static async updateFullTeam(req, res, next) {
+        try {
+            const updatedTeam = await TeamsService.updateFullTeam(req.body, req.params.id)
+            res.status(204).json({updatedTeam});
+        } catch (error) {
+            res.status(500).json({ error })
+        }
+    }
+
+    // PATCH - updating the old team with a new one
+    static async updateTeam(req, res, next) {
+        try {
+            const updatedTeam = await TeamsService.updateTeam(req.body, req.params.id)
+            res.status(204).json({updatedTeam});
+        } catch (error) {
+            res.status(500).json({ error })
+        }
+    }
+
 }

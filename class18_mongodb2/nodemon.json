@@ -1,0 +1,8 @@
+{
+    "env": {
+        "DB_NAME": "football",
+        "DB_USERNAME": "ivo1",
+        "DB_PASSWORD": "ivo123",
+        "DB_CLUSTER_NAME": "cluster0"
+    }
+}

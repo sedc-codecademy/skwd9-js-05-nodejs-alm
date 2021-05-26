@@ -4,7 +4,6 @@ module.exports = class TeamsService {
     static async getAllTeams() {
         try {
             const teams = await Team.find();
-            console.log(teams)
             if (!teams) {
                 return [];
             }
@@ -16,12 +15,6 @@ module.exports = class TeamsService {
 
     static async getTeamById(id) {
         try {
-            // bad way
-            // const teams = await this.getAllTeams();
-            // const team = teams.find(t => t.id === id);
-            // return team;
-
-            // good way
             const team = await Team.findById({ _id: id });
             return team;
         } catch (error) {
@@ -42,6 +35,24 @@ module.exports = class TeamsService {
             return createdTeam;
         } catch (error) {
             console.log(`Error while creating a team. ERROR: ${error}`)
+        }
+    }
+
+    static async updateFullTeam(data, id) {
+        try {
+            const updatedTeam = await Team.replaceOne({ _id: id }, data)
+            return updatedTeam;
+        } catch (error) {
+
+        }
+    }
+
+    static async updateTeam(data, id) {
+        try {
+            const updatedTeam = await Team.updateOne({ _id: id }, data)
+            return updatedTeam;
+        } catch (error) {
+
         }
     }
 }
