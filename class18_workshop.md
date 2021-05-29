@@ -21,7 +21,7 @@
 6. Security & Middleware
 	- Add a middleware that checks whether the user attempting a certain admin action (such as delete a dish) is actually an admin.
 	- Add HelmetJS & password hashing
-
+````
 Dish {
     id: string,
     name: string,
@@ -40,3 +40,4 @@ User: {
     password: string,
     type: string (User, Admin)
 }
+````
