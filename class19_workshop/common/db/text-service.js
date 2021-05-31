@@ -10,7 +10,7 @@ const writeData = (file, data) => {
 }
 
 const readData = (file) => {
-    const data = fs.readFileSync(path.join(__dirname, file), { encoding: ['utf-8', 'utf-16'] });
+    const data = fs.readFileSync(path.join(__dirname, file), { encoding: 'utf-8' });
     return JSON.parse(data);
 }
 
