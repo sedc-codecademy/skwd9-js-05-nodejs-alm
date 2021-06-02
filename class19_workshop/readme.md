@@ -1,6 +1,6 @@
 # Create an MVC structured eRestaurant application
 
-1. Create an authorization/authentication feature
+1. DONE - Create an authorization/authentication feature
 	- Create a LOGIN route
 	- Create a REGISTER route
 
