@@ -14,11 +14,11 @@
 4. DONE - Upgrade the admin panel
 	- Create a route that allows the admin to update the status of an order.
 
-5. Use session
+5. DONE - Use session
 	- Add sessions as a feature, allowing the backend to store user information during runtime. The User information should be stored in the session when they login.
 	- Add a LOGOUT route that clears the session of the user info.
 
-6. Security & Middleware
+6. DONE - Security & Middleware
 	- Add a middleware that checks whether the user attempting a certain admin action (such as delete a dish) is actually an admin.
 	- Add HelmetJS & password hashing
 ````

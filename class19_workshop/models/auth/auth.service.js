@@ -25,7 +25,7 @@ class AuthService {
     }
 
     // log in the user
-    return { message: "Logged in!" };
+    return user;
   }
 
   static async register(credentials) {
@@ -58,6 +58,10 @@ class AuthService {
 
     // return the user
     return user;
+  }
+
+  static async logout() {
+      
   }
 }
 
