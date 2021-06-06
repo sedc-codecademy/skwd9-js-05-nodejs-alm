@@ -1,0 +1,14 @@
+[
+  {
+    "id": "af71de91-ee71-4db0-9eb9-aa0ac0d8645f",
+    "username": "ivo@gmail.com",
+    "password": "$2b$10$S9AIPnEMDU5l.6tv8ejmwuCwETR3uD2GTO2rHEacwtjH4zYbRWks.",
+    "type": "User"
+  },
+  {
+    "id": "325bbcc1-57d3-469e-a160-7fe60055cd23",
+    "username": "ivan@gmail.com",
+    "password": "$2b$10$sF5VD6Q9SSXWMXWgLOtf0ePrY19vjNIWJulcNTeDkD1Q9LVYnfFRC",
+    "type": "Admin"
+  }
+]
