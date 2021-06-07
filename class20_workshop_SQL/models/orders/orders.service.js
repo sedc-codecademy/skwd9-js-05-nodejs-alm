@@ -1,50 +1,27 @@
-const ts = require('../../common/db/text-service')
-const { v4: uuidv4 } = require('uuid');
-const OrderStatus = require('../../common/models/order-status.enum')
+const ts = require("../../common/db/text-service");
+const OrderStatus = require("../../common/models/order-status.enum");
+const Order = require("./Order.model");
+const DishService = require("../dish/dish.service");
 
 class OrderService {
-    static createOrder(id) {
-        return new Promise((resolve, reject) => {
-            const dishes = ts.readData('dishes.json');
-            const orders = ts.readData('orders.json');
+  static async createOrder(dishId) {
+    const dish = await DishService.getDish(dishId);
 
-            const dish = dishes.find(d => d.id === id);
-
-            if (!dish) {
-                reject({ message: `Dish with ID: ${id} doesn't exist.`})
-            }
-
-            const order = {
-                id: uuidv4(),
-                dishName: dish.name,
-                status: OrderStatus.new
-            }
-
-            orders.push(order);
-
-            ts.writeData('orders.json', orders)
-
-            resolve(order);
-        })
+    if (!dish) {
+      throw new Error("Dish does not exist.");
     }
 
-    static updateOrderStatus(id, status) {
-        return new Promise((resolve, reject) => {
-            const orders = ts.readData('orders.json');
+    const order = {
+      dishName: dish.name,
+      status: OrderStatus.new,
+    };
 
-            const orderIndex = orders.findIndex(o => o.id === id);
+    return Order.create(order);
+  }
 
-            if (orderIndex < 0) {
-                reject({ message: `Order with ID ${id} doesn't exist.`})
-            }
-
-            orders[orderIndex].status = status;
-
-            ts.writeData('orders.json', orders);
-
-            resolve(orders[orderIndex])
-        })
-    }
+  static updateOrderStatus(id, status) {
+    Order.update({ status }, { returning: true, where: { id } });
+  }
 }
 
 module.exports = OrderService;
