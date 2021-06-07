@@ -23,5 +23,6 @@ const Dish = db.define('dish', {
 
 module.exports = Dish;
 
+// Naming:
 // animal => animals
 // dish => dishs => dishes
